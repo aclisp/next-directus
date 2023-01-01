@@ -2,17 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
-import { getLogger } from "../utils/log";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const logger = getLogger("home");
-
-  logger.error("a error message from Home");
-  logger.debug("a debug message from Home");
-  logger.info("a info message from Home");
-
   return (
     <>
       <Head>

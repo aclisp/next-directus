@@ -1,13 +1,36 @@
-import "../styles/globals.css";
+//import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { getLogger } from "../utils/log";
+import Head from "next/head";
+import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
+import { RouterTransition } from "../components/RouterTransition";
 
-export default function App({ Component, pageProps }: AppProps) {
-  const logger = getLogger("app");
+export default function App(props: AppProps) {
+  const { Component, pageProps } = props;
 
-  logger.error("a error message from _app");
-  logger.debug("a debug message from _app");
-  logger.info("a info message from _app");
+  return (
+    <>
+      <Head>
+        <title>Next App</title>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+      </Head>
 
-  return <Component {...pageProps} />;
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          /** Put your mantine theme override here */
+          colorScheme: "light",
+        }}
+      >
+        <NotificationsProvider position="top-center">
+          <RouterTransition />
+          <Component {...pageProps} />
+        </NotificationsProvider>
+      </MantineProvider>
+    </>
+  );
 }

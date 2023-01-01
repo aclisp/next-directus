@@ -1,5 +1,5 @@
 const logLevelData = {
-    "*": "silent",
+    "*": "debug",
     //home: "debug",
     //app: "info",
 };
