@@ -1,9 +1,9 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { getCurrentUserInfo, UserInfo } from "../lib/directus/user";
 import { sessionOptions, withIronSessionSsr } from "../lib/session";
-import { DIRECTUS_HOST } from "../lib/directus/transport";
 import { getLogger } from "../lib/log";
 import { Avatar, Paper, Text } from "@mantine/core";
+import { getFileLink } from "../lib/directus/utils";
 
 const logger = getLogger("profile");
 
@@ -46,7 +46,7 @@ export default function Profile(
       })}
     >
       <Avatar
-        src={getAvatar(userInfo.avatar, accessToken)}
+        src={getFileLink(userInfo.avatar, accessToken)}
         size={120}
         radius={120}
         mx="auto"
@@ -56,8 +56,4 @@ export default function Profile(
       </Text>
     </Paper>
   );
-}
-
-function getAvatar(avatar: string, token: string) {
-  return DIRECTUS_HOST + "/assets/" + avatar + "?access_token=" + token;
 }
