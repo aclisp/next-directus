@@ -6,7 +6,11 @@ import { sessionOptions } from "../../lib/session";
 
 const logger = getLogger("api/login");
 
-async function loginRoute(req: NextApiRequest, res: NextApiResponse) {
+type Data = {
+    message: string;
+};
+
+async function loginRoute(req: NextApiRequest, res: NextApiResponse<Data>) {
     const { username, password } = await req.body;
     logger.debug(`POST username=${username} password=${password}`);
 

@@ -3,7 +3,7 @@ import type {
     GetServerSidePropsResult,
 } from "next";
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
-import { getAccessToken, LoginInfo } from './directus/transport';
+import { getAccessToken, LoginInfo, NeedLoginError } from './directus/transport';
 import { IncomingMessage, ServerResponse } from "http";
 
 export const sessionOptions: IronSessionOptions = {
@@ -83,9 +83,17 @@ export function withIronSessionSsr<
             sessionOptions,
         );
 
-        await getAccessToken(session, () => {
-            session.save();
-        });
+        try {
+            await getAccessToken(session, () => {
+                session.save();
+            });
+        } catch (error) {
+            if (error instanceof NeedLoginError) {
+                return redirectToLogin<P>(context.req);
+            } else {
+                throw error;
+            }
+        }
 
         Object.defineProperty(
             context.req,
@@ -93,5 +101,18 @@ export function withIronSessionSsr<
             getPropertyDescriptorForReqSession(session),
         );
         return handler(context);
+    };
+}
+
+function redirectToLogin<P>(req: IncomingMessage): GetServerSidePropsResult<P> {
+    let location = "/login";
+    if (req.url) {
+        location += "?redirect=" + encodeURIComponent(req.url);
+    }
+    return {
+        redirect: {
+            destination: location,
+            permanent: false,
+        }
     };
 }

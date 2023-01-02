@@ -28,11 +28,10 @@ export const getServerSideProps: GetServerSideProps<Props> = withIronSessionSsr(
   sessionOptions,
 );
 
-export default function SsrProfile(
-  { userInfo, accessToken }: InferGetServerSidePropsType<
-    typeof getServerSideProps
-  >,
+export default function Profile(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) {
+  const { userInfo, accessToken } = props;
   return (
     <Paper
       mx="auto"

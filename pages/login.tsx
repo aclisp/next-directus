@@ -3,8 +3,30 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import Image from "next/image";
 import { IconCheck, IconX } from "@tabler/icons";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useRouter } from "next/router";
 
-export default function Login() {
+type Props = {
+  redirect: string;
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context,
+) => {
+  const { query } = context;
+  return {
+    props: {
+      redirect: (query.redirect as string) ?? "/",
+    },
+  };
+};
+
+export default function Login(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
+) {
+  const { redirect } = props;
+  const router = useRouter();
+
   const form = useForm({
     initialValues: {
       username: "",
@@ -37,6 +59,7 @@ export default function Login() {
         message: data.message,
         color: "green",
         icon: <IconCheck />,
+        onClose: () => router.push(redirect),
       });
     }
   });
@@ -48,6 +71,7 @@ export default function Login() {
         alt=""
         width={300}
         height={300}
+        priority
       />
       <form onSubmit={onSubmit}>
         <TextInput
