@@ -133,7 +133,7 @@ const mockdata = [
 ];
 
 export type AppHeaderProps = {
-  isLogin?: boolean;
+  isLogin: boolean;
   userInfo?: UserInfo;
   accessToken?: string;
 };
@@ -348,9 +348,9 @@ function HasLogin(props: AppHeaderProps) {
           src={getFileLink(userInfo.avatar, accessToken)}
           radius={30}
         />
-        <Text size="sm" weight={500}>
+        <Anchor href="/profile" size="sm" weight={500}>
           {userInfo.first_name} {userInfo.last_name}
-        </Text>
+        </Anchor>
       </Group>
       <Button variant="default" onClick={logout}>Log out</Button>
     </>

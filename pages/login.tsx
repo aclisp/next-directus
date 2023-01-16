@@ -59,6 +59,7 @@ export default function Login(
         message: data.message,
         color: "green",
         icon: <IconCheck />,
+        autoClose: 500,
         onClose: () => router.push(redirect),
       });
     }

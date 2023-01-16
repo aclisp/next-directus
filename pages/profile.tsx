@@ -34,6 +34,7 @@ export default function Profile(
   const { userInfo, accessToken } = props;
   return (
     <Paper
+      mt="md"
       mx="auto"
       radius="md"
       withBorder

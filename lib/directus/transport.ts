@@ -2,7 +2,7 @@ import { IronSessionData } from "iron-session";
 import { getLogger } from "../log";
 
 const logger = getLogger("directus/transport");
-export const DIRECTUS_HOST = "http://127.0.0.1:8055";
+export const DIRECTUS_HOST = "http://192.168.0.105:8055";
 
 export interface LoginInfo {
     access_token: string;

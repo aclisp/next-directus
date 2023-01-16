@@ -57,6 +57,9 @@ function getPropertyDescriptorForReqSession(
     };
 }
 
+/**
+ * Refresh token automatically, redirect to `login` on error.
+ */
 export function withIronSessionSsr<
     P extends { [key: string]: unknown; } = { [key: string]: unknown; },
 >(
